@@ -8,5 +8,4 @@ router.get('/', function(req, res, next) {
 });
 
 router.use('/users', userRoute);
-
 module.exports = router;

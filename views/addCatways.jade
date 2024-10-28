@@ -1,0 +1,24 @@
+extends layout
+
+block content
+    nav
+      ul
+        li: a(href='/') Accueil
+        li: a(href='/catways/add') Ajouter un Catway
+    h1= title
+    
+    form(action="/catways/add" method="POST")
+        div
+            label(for="catwayNumber") Numéro de Pont :
+            input(type="text" id="catwayNumber" name="catwayNumber" required)
+        div
+            label(for="type") Type :
+            select(id="type" name="type" required)
+                option(value="") Choisir un type
+                option(value="long") Long
+                option(value="short") Court
+        div
+            label(for="catwayState") Description de l'état du pont :
+            textarea(id="catwayState" name="catwayState")
+        div
+            button(type="submit") Ajouter Catway

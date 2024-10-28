@@ -1,5 +1,24 @@
 extends layout
 
 block content
+
+  nav
+    ul
+      li: a(href='/') Accueil
+      li: a(href='/catways/add') Ajouter un Catway
   h1= title
-  p Welcome to #{title}
+  if data.length
+    table 
+      h2 Liste des Catways
+      table
+        tr
+          th Numéro de Pont
+          th Type
+          th État
+        each catway in data
+          tr
+            td= catway.catwayNumber
+            td= catway.type
+            td= catway.catwayState
+  else
+    p Aucun catway disponible.

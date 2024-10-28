@@ -1,5 +1,14 @@
 const Catway = require('../models/catways');
 
+exports.getAll = async () => {
+    try {
+        const catways = await Catway.find();
+        return catways;
+    } catch (error) {
+        throw new Error('Erreur lors de la récupération des données');
+    }
+};
+
 exports.getById = async (req, res, next) => {
     const id = req.params.id;
     try {
@@ -17,12 +26,13 @@ exports.add = async (req, res, next) => {
     const temp = ({
         catwayNumber: req.body.catwayNumber,
         type: req.body.type,
-        catwayState: req.body.catwayState
+        catwayState: req.body.catwayState || 'Indéterminé'
     })
     try {
         let catway = await Catway.create(temp);
-        return res.status(201).json(catway);
+        res.redirect('/');
     } catch (error) {
+        console.log('Erreur lors de la soumission du questionnaire :' + error);
         return res.status(501).json(error);
     }
 }

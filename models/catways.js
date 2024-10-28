@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 const schema = mongoose.Schema;
-const bcrypt = require('bcrypt');
 
 const Catway = new schema({
     catwayNumber: {

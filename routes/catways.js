@@ -5,7 +5,7 @@ var service = require('../services/catways');
 router.get('/', service.getAll);
 router.get('/:id', service.getById);
 router.post('/add', service.add);
-router.patch('/:id', service.update);
-router.delete('/:id', service.delete);
+router.post('/:id/update', service.update);
+router.post('/:id/delete', service.delete);
 
 module.exports = router;

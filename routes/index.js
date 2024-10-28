@@ -19,6 +19,16 @@ router.get('/catways/add', (req, res) => {
     res.render('addCatways', {title: 'Ajouter un catway'});
 });
 
+// Route pour afficher le formulaire de modification
+router.get('/catways/:id/update', async (req, res, next) => {
+ try {
+    const catway = await catwayService.getById(req.params.id);
+    res.render('updateCatways', { title: 'Modifier Catway', catway });
+  } catch (error) {
+    next(error);
+  }
+});
+
 router.use('/users', userRoute);
 router.use('/catways', catwayRoute);
 module.exports = router;

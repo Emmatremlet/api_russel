@@ -6,8 +6,8 @@ block content
         li: a(href='/') Accueil
         li: a(href='/catways/add') Ajouter un Catway
     h1= title
-    
-    form(action="/catways/add" method="POST")
+
+    form(action="/catways/add" id='add-catways' method="POST")
         div
             label(for="catwayNumber") Numéro de Pont :
             input(type="text" id="catwayNumber" name="catwayNumber" required)

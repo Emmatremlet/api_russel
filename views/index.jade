@@ -8,17 +8,23 @@ block content
       li: a(href='/catways/add') Ajouter un Catway
   h1= title
   if data.length
-    table 
-      h2 Liste des Catways
-      table
+    h2 Liste des Catways
+    table(border=1)
+      tr
+        th Numéro de Pont
+        th Type
+        th État
+        th Actions
+      each catway in data
         tr
-          th Numéro de Pont
-          th Type
-          th État
-        each catway in data
-          tr
-            td= catway.catwayNumber
-            td= catway.type
-            td= catway.catwayState
+          td= catway.catwayNumber
+          td= catway.type
+          td= catway.catwayState
+          td
+            form(action='/catways/' + catway._id + '/delete', method='POST')
+              button(type='submit', class='delete-button') Supprimer
+            form(action='/catways/' + catway._id + '/update', method='PATCH')
+              button(type='submit', class='update-button') Modifier
+
   else
     p Aucun catway disponible.

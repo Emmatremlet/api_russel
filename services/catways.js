@@ -39,7 +39,6 @@ exports.add = async (req, res, next) => {
 }
 
 exports.update = async (req, res, next) => {
-    console.log(req.body);
     const id = req.params.id;
     const temp = ({
         catwayNumber: req.body.catwayNumber,

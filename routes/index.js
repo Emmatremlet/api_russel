@@ -8,8 +8,10 @@ var catwayService = require('../services/catways');
 router.get('/', async (req, res, next) => {
     try {
       const catwaysData = await catwayService.getAll(); 
+      console.log(catwaysData);
       res.render('index', { title: 'Accueil', data: catwaysData });
     } catch (error) {
+      console.log(error);
         next(error);
     }
 });

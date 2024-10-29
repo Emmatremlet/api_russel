@@ -5,15 +5,24 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var mongoose = require('mongoose');
 var cors = require('cors');
+const fs = require('fs');
+
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var catwaysRouter = require('./routes/catways');
 const mongodb = require('./db/mongo');
+const Catway = require('./models/catways');
+
+const dataPath = path.join(__dirname, 'data', 'catways.json');
+const catwaysData = JSON.parse(fs.readFileSync(dataPath, 'utf-8'));
+
 
 mongodb.initClientDbConnection();
 
 var app = express();
+
+
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -48,5 +57,22 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+
+
+const insertData = async () => {
+  try {
+    for (const newCatway of catwaysData) {
+      const existingCatway = await Catway.findOne({ catwayNumber: newCatway.catwayNumber });
+      if (!existingCatway) {
+        await Catway.create(newCatway);
+      }
+    }
+    console.log('Données insérées sans doublons !');
+  } catch (err) {
+    console.error("Erreur d'insertion", err);
+  }
+};
+
+insertData();
 
 module.exports = app;

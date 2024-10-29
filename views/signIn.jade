@@ -1,0 +1,18 @@
+extends layout
+
+block content
+    nav
+        ul
+            li: a(href='/') Accueil
+            li: a(href='/users/signin') Se connecter
+            li: a(href='/users/add') S'inscrire
+    h1= titlePage
+    form(action="/users/authenticate", id="form", method="POST")
+        div
+            label(for="email") Email :
+            input(type="email", id="email", name="email", required)
+        div
+            label(for="password") Mot de passe :
+            input(type="password", id="password", name="password", required)
+        div
+            button(type="submit") S'inscrire

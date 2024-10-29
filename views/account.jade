@@ -1,0 +1,19 @@
+extends layout
+
+block content
+    nav
+      ul
+        li: a(href='/') Accueil
+        li: a(href='/catways') Liste des catways
+        li: a(href='/catways/add') Ajouter un Catway
+        li: a(href='/users/' + user._id + '/account') Mon compte
+        li: a(href='/logout') Se déconnecter
+
+    h1= titlePage
+
+    div#account
+        h2 Informations du compte
+        p Nom : #{user.name}
+        p Email : #{user.email}
+        a#update-account(href='/users/'+ user._id + '/update') Modifier les informations
+        a#logout-btn(href='/logout') Se déconnecter

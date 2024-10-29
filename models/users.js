@@ -19,7 +19,7 @@ const User = new schema({
         type: String,
         trim: true,
     },
-},
+    },
     {
         timestamps: true
     });

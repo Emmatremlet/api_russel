@@ -4,21 +4,23 @@ block content
     nav
       ul
         li: a(href='/') Accueil
+        li: a(href='/catways') Liste des catways
         li: a(href='/catways/add') Ajouter un Catway
-    h1= title
-
-    form(action="/catways/add" id='add-catways' method="POST")
+        li: a(href='/users/' + user._id + '/account') Mon compte
+        li: a(href='/logout') Se déconnecter
+    h1= titlePage
+    form(action="/catways/add", id="form", method="POST")
         div
             label(for="catwayNumber") Numéro de Pont :
-            input(type="text" id="catwayNumber" name="catwayNumber" required)
+            input(type="number", id="catwayNumber", name="catwayNumber", required)
         div
             label(for="type") Type :
-            select(id="type" name="type" required)
+            select(id="type", name="type", required)
                 option(value="") Choisir un type
                 option(value="long") Long
                 option(value="short") Court
         div
             label(for="catwayState") Description de l'état du pont :
-            textarea(id="catwayState" name="catwayState")
+            textarea(id="catwayState", name="catwayState")
         div
             button(type="submit") Ajouter Catway

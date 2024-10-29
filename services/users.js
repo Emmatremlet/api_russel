@@ -20,18 +20,23 @@ exports.add = async (req, res, next) => {
         email: req.body.email,
         password: req.body.password
     };
+
     try {
         if (!temp.name || !temp.email || !temp.password) {
             return res.status(400).json({ message: "Tous les champs sont requis." });
         }
-        
+
         const user = await User.create(temp);
-        res.redirect('/'); 
+        res.redirect('/users/signin');
     } catch (error) {
-        console.log('Erreur lors de la soumission du questionnaire :' + error);
-        next(error); 
+        if (error.code === 11000) {
+            return res.redirect('/users/add');
+        }
     }
+    console.log('Erreur lors de la soumission du questionnaire : ' + error);
+    next(error);
 };
+
 
 exports.update = async (req, res, next) => {
     const id = req.params.id;
@@ -55,7 +60,8 @@ exports.delete = async (req, res, next) => {
     const id = req.params.id;
     try {
         await User.deleteOne({ _id: id });
-        return res.status(204).json('delete_ok');
+        res.clearCookie('token'); 
+        res.redirect('/');
     } catch (error) {
         return res.status(501).json(error);
     }

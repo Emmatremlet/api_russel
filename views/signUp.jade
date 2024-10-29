@@ -4,9 +4,11 @@ block content
     nav
         ul
             li: a(href='/') Accueil
+        ul
             li: a(href='/users/signin') Se connecter
             li: a(href='/users/add') S'inscrire
     h1= titlePage
+
     form(action="/users/add", id="form", method="POST")
         div
             label(for="name") Nom:

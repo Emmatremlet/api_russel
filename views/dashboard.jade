@@ -1,0 +1,54 @@
+extends layout
+
+block content
+    nav
+        ul
+            li: a(href='/') Accueil
+            li: a(href='/dashboard') Tableau de bord
+        ul
+            li: a(href='/users/' + user._id + '/account', id="link-account", style="display: inline-flex; align-items: center; justify-content: center; width: 30px; height: 30px; border-radius: 50%; background-color: blue;") 
+                svg(xmlns="http://www.w3.org/2000/svg", fill="none", viewBox="0 0 24 24", stroke-width="1.5", stroke="currentColor", style="width: 25px; height: 25px;")
+                    path(stroke-linecap="round", stroke-linejoin="round", d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z")        
+            li: a(href='/logout') Se déconnecter
+    h1= titlePage
+    div#main-board
+        #list
+            if data.length
+                h2 Liste des Catways
+                table(border=1)
+                    tr
+                        th Numéro de Pont
+                        th Type
+                        th État
+                        th Actions
+                    each catway in data
+                        tr
+                            td#number-list= catway.catwayNumber
+                            td#type-list= catway.type
+                            td#state-list= catway.catwayState
+                            td
+                                form(action='/catways/' + catway._id + '/delete', method='POST')
+                                    button(type='submit', class='delete-button') Supprimer
+                                form(action='/catways/' + catway._id + '/update', method='PATCH')
+                                    button(type='submit', class='update-button') Modifier
+
+            else
+                p Aucun catway disponible.
+        #add
+            h2 Ajouter un catway
+            form(action="/catways/add", id="form-add", method="POST")
+                div
+                    label(for="catwayNumber") Numéro de Pont :
+                    input(type="number", id="catwayNumber", name="catwayNumber", required)
+                div
+                    label(for="type") Type :
+                    select(id="type", name="type", required)
+                        option(value="") Choisir un type
+                        option(value="long") Long
+                        option(value="short") Court
+                div
+                    label(for="catwayState") Description de l'état du pont :
+                    textarea(id="catwayState", name="catwayState")
+                div
+                    button(type="submit") Ajouter Catway
+            

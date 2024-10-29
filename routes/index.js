@@ -13,10 +13,10 @@ router.get('/', async (req, res) => {
 })
 
 /* GET catways page avec données de catways */
-router.get('/catways', private.checkJWT, async (req, res, next) => {
+router.get('/dashboard', private.checkJWT, async (req, res, next) => {
   try {
     const catwaysData = await catwayService.getAll(); 
-    res.render('catwaysList', { titlePage: 'Liste des catways', data: catwaysData, user: req.user });
+    res.render('dashboard', { titlePage: 'Tableau de bord', data: catwaysData, user: req.user });
   } catch (error) {
       next(error);
   }

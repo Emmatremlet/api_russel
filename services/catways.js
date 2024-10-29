@@ -31,7 +31,7 @@ exports.add = async (req, res, next) => {
     })
     try {
         let catway = await Catway.create(temp);
-        res.redirect('/');
+        res.redirect('/dashboard');
     } catch (error) {
         console.log('Erreur lors de la soumission du questionnaire :' + error);
         return res.status(501).json(error);
@@ -54,7 +54,7 @@ exports.update = async (req, res, next) => {
                 }
             });
             await catway.save()
-            return res.redirect('/');
+            return res.redirect('/dashboard');
         }
         return res.status(404).json('catway_not_found');
     } catch (error) {
@@ -67,9 +67,8 @@ exports.delete = async (req, res, next) => {
     const id = req.params.id;
     try {
         await Catway.deleteOne({ _id: id });
-        res.redirect('/');
+        res.redirect('/dashboard');
     } catch (error) {
-        console.error('Erreur lors de la suppression:', error);
         return res.status(501).json(error);
     }
 }

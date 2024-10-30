@@ -51,4 +51,52 @@ block content
                     textarea(id="catwayState", name="catwayState")
                 div
                     button(type="submit") Ajouter Catway
+    
+    #list-reservations
+        if dataReservations.length
+            h2 Liste des Reservations
+            table(border=1)
+                tr
+                    th Numéro de Pont
+                    th Nom du client
+                    th Nom du bateau
+                    th Date d'emprunt 
+                    th Date de rendu
+                each reservation in dataReservations
+                    tr
+                        td#number-list= reservation.catwayNumber
+                        td#client-name= reservation.clientName 
+                        td#boat-name= reservation.boatName 
+                        td#check-in= reservation.checkIn
+                        td#check-out= reservation.checkOut
+                        td
+                            form(action='/reservation/' + reservation._id + '/delete', method='POST')
+                                button(type='submit', class='delete-button') Supprimer
+                            form(action='/reservation/' + reservation._id + '/update', method='PATCH')
+                                button(type='submit', class='update-button') Modifier
+
+        else
+            p Aucune réservations disponible.
+    #add
+        h2 Ajouter une réservations
+        form(action="/reservations/add", id="form-add", method="POST")
+            div
+                label(for="catwayNumber") Numéro de Pont :
+                input(type="number", id="catwayNumber", name="catwayNumber", required)
+            div
+                label(for="clientName") Nom du client :
+                input(type="text", id="clientName", name="clientName", required)
+
+            div
+                label(for="boatName") Nom du bateau :
+                input(type="text", id="boatName", name="boatName", required)
             
+            div 
+                label(for="checkIn") Check in : 
+                input(type="date", id="checkIn", name="checkIn", required)
+            
+            div 
+                label(for="checkOut") Check out : 
+                input(type="date", id="checkOut", name="checkOut", required)
+            div
+                button(type="submit") Ajouter une réservation

@@ -2,8 +2,10 @@ var express = require('express');
 var router = express.Router();
 var userRoute = require('../routes/users');
 var catwayRoute = require('../routes/catways');
+var reservationRoute = require('../routes/catways');
 var catwayService = require('../services/catways');
 var userService = require('../services/users');
+var reservationService = require('../services/reservations');
 const private = require('../middlewares/private');
 
 router.use(private.checkJWT);
@@ -15,17 +17,18 @@ router.get('/', async (req, res) => {
 /* GET catways page avec données de catways */
 router.get('/dashboard', private.checkJWT, async (req, res, next) => {
   try {
+    const dataReservations = await reservationService.getAll().populate('catwayNumber').populate('name');
     const catwaysData = await catwayService.getAll(); 
-    res.render('dashboard', { titlePage: 'Tableau de bord', data: catwaysData, user: req.user });
+    res.render('dashboard', { titlePage: 'Tableau de bord', data: catwaysData, user: req.user,  dataReservations: dataReservations});
   } catch (error) {
       next(error);
   }
 });
 
-// Route pour afficher le formulaire d'ajout
-router.get('/catways/add', private.checkJWT, (req, res) => {
-  res.render('addCatways', {titlePage: 'Ajouter un catway', user: req.user});
-});
+// // Route pour afficher le formulaire d'ajout
+// router.get('/catways/add', private.checkJWT, (req, res) => {
+//   res.render('addCatways', {titlePage: 'Ajouter un catway', user: req.user});
+// });
 
 // Route pour afficher le formulaire de modification
 router.get('/catways/:id/update', private.checkJWT, async (req, res, next) => {
@@ -88,6 +91,7 @@ router.get('/users/:id/account', async (req, res, next) => {
   }
 });
 
+
 router.get('/users/:id/update', async (req, res, next) => {
   try {
     const user = await userService.getById(req.params.id);
@@ -101,5 +105,6 @@ router.get('/users/:id/update', async (req, res, next) => {
 
 router.use('/users', userRoute);
 router.use('/catways', catwayRoute);
+router.use('/reservations', reservationRoute);
 
 module.exports = router;

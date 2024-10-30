@@ -48,7 +48,6 @@ nav a {
   color: white; 
   padding: 0;
   margin-top : 5px;
-  /* border-radius: 50%; */
 }
 
 
@@ -56,6 +55,9 @@ nav a:hover {
   background-color: #0056b3; 
 }
 
+tbody {
+  max-height: 300px;
+}
 
 td, th {
   padding: 10px;
@@ -72,6 +74,22 @@ td, th {
 
 #state-list {
   width: 40%;
+}
+
+#client-name{
+  width: 5%;
+}
+
+#boat-name{
+  width: 10%;
+}
+
+#check-in{
+  width: 30%;
+}
+
+#check-out {
+  width: 30%;
 }
 
 #main-board{

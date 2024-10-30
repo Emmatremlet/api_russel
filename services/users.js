@@ -3,6 +3,14 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const SECRET_KEY = process.env.SECRET_KEY;
 
+exports.getAll = async () => {
+    try {
+        const users = await User.find();
+        return users;
+    } catch (error) {
+        throw new Error('Erreur lors de la récupération des données');
+    }
+};
 
 exports.getById = async (id) => {
   try {

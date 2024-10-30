@@ -1,11 +1,12 @@
+
 const Reservation = require('../models/reservations');
 
 exports.getAll = async () => {
     try {
-        const reservation = await Reservation.find();
+        const reservation = await Reservation.find()
         return reservation;
     } catch (error) {
-        throw new Error('Erreur lors de la récupération des données');
+        throw new Error('Erreur lors de la récupération des données des réservations');
     }
 };
 
@@ -13,8 +14,6 @@ exports.getAll = async () => {
 exports.getById = async (id) => {
     try {
         let reservation = await Reservation.findById(id)
-            .populate('catwayNumber')
-            .populate('name');
         if (reservation) {
             return reservation;
         } else {
@@ -28,16 +27,16 @@ exports.getById = async (id) => {
 exports.add = async (req, res, next) => {
     const temp = ({
         catwayNumber: req.body.catwayNumber,
-        clientName: req.body.name,
-        boatName :req.body.boatName,
-        checkIn: req.body.checkIn || Date.now,
+        clientName: req.body.clientName,
+        boatName: req.body.boatName,
+        checkIn: req.body.checkIn,
         checkOut: req.body.checkOut
     })
     try {
         let reservation = await Reservation.create(temp);
         res.redirect('/dashboard');
     } catch (error) {
-        console.log('Erreur lors de la soumission du questionnaire :' + error);
+        console.log('Erreur lors de la soumission du questionnaire de réservations :' + error);
         return res.status(501).json(error);
     }
 }

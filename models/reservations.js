@@ -4,7 +4,6 @@ const schema = mongoose.Schema;
 const Reservation = new schema({
     catwayNumber: {
         type: Number,
-        ref : 'Catway',
         trim: true,
         unique: true,
         required: [true, 'Le numéro de pont est requis']
@@ -12,9 +11,8 @@ const Reservation = new schema({
     clientName: {
         type: String,
         trim: true,
-        ref : 'User',
-        required: [true, 'Le client est requis'],
-
+        unique : true,
+        required: [true, 'Le type est requis'],
     },
     boatName: {
         type: String,

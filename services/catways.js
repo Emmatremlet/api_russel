@@ -33,7 +33,7 @@ exports.add = async (req, res, next) => {
         let catway = await Catway.create(temp);
         res.redirect('/dashboard');
     } catch (error) {
-        console.log('Erreur lors de la soumission du questionnaire :' + error);
+        console.log('Erreur lors de la soumission du questionnaire de catway :' + error);
         return res.status(501).json(error);
     }
 }

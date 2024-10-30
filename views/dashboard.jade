@@ -11,6 +11,7 @@ block content
                     path(stroke-linecap="round", stroke-linejoin="round", d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z")        
             li: a(href='/logout') Se déconnecter
     h1= titlePage
+
     div#main-board
         #list
             if data.length
@@ -65,7 +66,7 @@ block content
                 each reservation in dataReservations
                     tr
                         td#number-list= reservation.catwayNumber
-                        td#client-name= reservation.clientName 
+                        td#client-name= reservation.clientName
                         td#boat-name= reservation.boatName 
                         td#check-in= reservation.checkIn
                         td#check-out= reservation.checkOut
@@ -81,22 +82,24 @@ block content
         h2 Ajouter une réservations
         form(action="/reservations/add", id="form-add", method="POST")
             div
-                label(for="catwayNumber") Numéro de Pont :
-                input(type="number", id="catwayNumber", name="catwayNumber", required)
+                label(for="catwayNumber") Catway :
+                select(id="catwayNumber", name="catwayNumber", required)
+                    each catway in data
+                        option(value=catway.catwayNumber) #{catway.catwayNumber} - #{catway.type}
             div
                 label(for="clientName") Nom du client :
                 input(type="text", id="clientName", name="clientName", required)
-
             div
                 label(for="boatName") Nom du bateau :
                 input(type="text", id="boatName", name="boatName", required)
             
             div 
                 label(for="checkIn") Check in : 
-                input(type="date", id="checkIn", name="checkIn", required)
+                input(type="date", id="checkIn", name="checkIn")
             
             div 
                 label(for="checkOut") Check out : 
                 input(type="date", id="checkOut", name="checkOut", required)
             div
                 button(type="submit") Ajouter une réservation
+        

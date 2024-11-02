@@ -15,12 +15,11 @@ block content
 
     h1= titlePage
 
-    form(action="/users/" + user._id + "/update", id="form", method="POST")
-        div
-            label(for="name") Nom :
-            input(type="name", id="name", name="name", required, value=user.name)
-        div
-            label(for="email") Email :
-            input(type="email", id="email", value=user.email, name="email", required)
-        div
-            button(type="submit") Modifier les informations
+    div#account
+        h2 Détails du catway
+        p Numéro de pont : #{catway.catwayNumber}
+        p Type : #{catway.type}
+        p État : #{catway.catwayState}
+        a#update-account(href='/catways/'+ catway._id + '/update') Modifier le catway
+        form(id='logout-form', action='/catways/' + catway._id + '/delete', method='POST')
+          button(type='submit', id='delete-btn') Supprimer le catway

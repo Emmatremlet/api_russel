@@ -9,10 +9,9 @@ exports.getAll = async () => {
     }
 };
 
-
 exports.getById = async (id) => {
     try {
-        let catway = await Catway.findById(id);
+        const catway = await Catway.findById(id);
         if (catway) {
             return catway;
         } else {
@@ -23,52 +22,44 @@ exports.getById = async (id) => {
     }
 };
 
-exports.add = async (req, res, next) => {
-    const temp = ({
-        catwayNumber: req.body.catwayNumber,
-        type: req.body.type,
-        catwayState: req.body.catwayState || 'Indéterminé'
-    })
-    try {
-        let catway = await Catway.create(temp);
-        res.redirect('/dashboard');
-    } catch (error) {
-        console.log('Erreur lors de la soumission du questionnaire de catway :' + error);
-        return res.status(501).json(error);
-    }
-}
+exports.findByCatwayNumber = async (catwayNumberUpdate) => {
+    const catwayNumber = catwayNumberUpdate;
+    const catway = await Catway.findOne({ catwayNumber });
+    return catway;
+};
 
-exports.update = async (req, res, next) => {
-    const id = req.params.id;
-    const temp = ({
-        catwayNumber: req.body.catwayNumber,
-        type: req.body.type,
-        catwayState: req.body.catwayState || 'Indéterminé'
-    })
+exports.add = async (catwayData) => {
     try {
-        let catway = await Catway.findOne({ _id: id });
+        const catway = await Catway.create(catwayData);
+        return catway;
+    } catch (error) {
+        console.error("Error in Catway creation:", error);
+        throw new Error('Erreur lors de la création du catway');
+    }
+};
+
+exports.update = async (id, catwayData) => {
+    try {
+        const catway = await Catway.findOne({ _id: id });
         if (catway) {
-            Object.keys(temp).forEach((key) => {
-                if (!!temp[key]) {
-                    catway[key] = temp[key];
+            Object.keys(catwayData).forEach((key) => {
+                if (catwayData[key] !== undefined) {
+                    catway[key] = catwayData[key];
                 }
             });
-            await catway.save()
-            return res.redirect('/dashboard');
+            await catway.save();
+            return catway;
         }
-        return res.status(404).json('catway_not_found');
+        throw new Error('catway_not_found');
     } catch (error) {
-        console.error(error);
-        return res.status(501).json(error);
+        throw error;
     }
-}
+};
 
-exports.delete = async (req, res, next) => {
-    const id = req.params.id;
+exports.delete = async (id) => {
     try {
         await Catway.deleteOne({ _id: id });
-        res.redirect('/dashboard');
     } catch (error) {
-        return res.status(501).json(error);
+        throw new Error('Erreur lors de la suppression du catway');
     }
-}
+};

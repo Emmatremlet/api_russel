@@ -1,12 +1,14 @@
-var express = require('express');
-var router = express.Router();
-var service = require('../services/users');
+const express = require('express');
+const router = express.Router();
+const userController = require('../controllers/users');
+const userService = require('../services/users');
 const private = require('../middlewares/private');
 
-router.get('/:id/account', private.checkJWT, service.getById);
-router.post('/add', service.add);
-router.post('/:id/update', private.checkJWT, service.update);
-router.post('/:id/delete', private.checkJWT, service.delete);
-router.post('/authenticate', service.authenticate);
+router.get('/', private.checkJWT, userService.getAll);
+router.get('/:id/account', private.checkJWT, userService.getById);
+router.post('/add', userController.add);
+router.post('/:id/update', private.checkJWT, userController.update);
+router.post('/:id/delete', private.checkJWT, userController.delete);
+router.post('/authenticate', userController.authenticate);
 
 module.exports = router;

@@ -15,12 +15,13 @@ block content
 
     h1= titlePage
 
-    form(action="/users/" + user._id + "/update", id="form", method="POST")
-        div
-            label(for="name") Nom :
-            input(type="name", id="name", name="name", required, value=user.name)
-        div
-            label(for="email") Email :
-            input(type="email", id="email", value=user.email, name="email", required)
-        div
-            button(type="submit") Modifier les informations
+    div#account
+        h2 Détails de la réservation
+        p Numéro de pont : #{reservation.catwayNumber}
+        p Nom du client : #{reservation.clientName}
+        p Nom du bateau : #{reservation.boatName}
+        p Check In : #{reservation.checkIn}
+        p Check Out : #{reservation.checkOut}
+        a#update-account(href='/reservations/'+ reservation._id + '/update') Modifier la reservation
+        form(id='logout-form', action='/reservations/' + reservation._id + '/delete', method='POST')
+          button(type='submit', id='delete-btn') Supprimer la reservation

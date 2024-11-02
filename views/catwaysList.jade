@@ -14,13 +14,22 @@ block content
             li: a(href='/logout') Se déconnecter
 
     h1= titlePage
+    #list
+        if data.length
+            table#table(border=1)
+                tr
+                    th Numéro de Pont
+                    if user
+                        th 
+                each catway in data
+                    tr
+                        td#number-list= catway.catwayNumber
+                        if user
+                            td
+                                form(action='/catways/' + catway._id + '/delete', method='POST')
+                                    button(type='submit', class='delete-button') Supprimer
+                                form(action='/catways/' + catway._id + '/details', method='GET')
+                                    button(type='submit', class='update-button') Voir
 
-    form(action="/users/" + user._id + "/update", id="form", method="POST")
-        div
-            label(for="name") Nom :
-            input(type="name", id="name", name="name", required, value=user.name)
-        div
-            label(for="email") Email :
-            input(type="email", id="email", value=user.email, name="email", required)
-        div
-            button(type="submit") Modifier les informations
+        else
+            p Aucun catway disponible.

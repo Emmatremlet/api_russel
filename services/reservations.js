@@ -24,56 +24,44 @@ exports.getById = async (id) => {
     }
 };
 
-exports.add = async (req, res, next) => {
-    const temp = ({
-        catwayNumber: req.body.catwayNumber,
-        clientName: req.body.clientName,
-        boatName: req.body.boatName,
-        checkIn: req.body.checkIn,
-        checkOut: req.body.checkOut
-    })
+exports.findByClientName = async (clientName) => {
+    const reservation = await Reservation.findOne({ clientName });
+    return reservation;
+};
+
+
+exports.add = async (reservationData) => {
     try {
-        let reservation = await Reservation.create(temp);
-        res.redirect('/dashboard');
+        let reservation = await Reservation.create(reservationData);
+        return reservation
     } catch (error) {
         console.log('Erreur lors de la soumission du questionnaire de réservations :' + error);
         return res.status(501).json(error);
     }
 }
 
-exports.update = async (req, res, next) => {
-    const id = req.params.id;
-    const temp = ({
-        catwayNumber: req.body.catwayNumber,
-        clientName: req.body.clientName,
-        boatName :req.body.boatName,
-        checkIn: req.body.checkIn || Date.now,
-        checkOut: req.body.checkOut
-    })
+exports.update = async (id, reservationData) => {
     try {
-        let reservation = await Reservation.findOne({ _id: id });
+        const reservation = await Reservation.findOne({ _id: id });
         if (reservation) {
-            Object.keys(temp).forEach((key) => {
-                if (!!temp[key]) {
-                    reservation[key] = temp[key];
+            Object.keys(reservationData).forEach((key) => {
+                if (reservationData[key] !== undefined) {
+                    reservation[key] = reservationData[key];
                 }
             });
-            await reservation.save()
-            return res.redirect('/dashboard');
+            await reservation.save();
+            return reservation;
         }
-        return res.status(404).json('reservation_not_found');
+        throw new Error('reservation_not_found');
     } catch (error) {
-        console.error(error);
-        return res.status(501).json(error);
+        throw error;
     }
-}
+};
 
-exports.delete = async (req, res, next) => {
-    const id = req.params.id;
+exports.delete = async (id) => {
     try {
         await Reservation.deleteOne({ _id: id });
-        res.redirect('/dashboard');
     } catch (error) {
-        return res.status(501).json(error);
+        throw new Error('Erreur lors de la suppression de la réservation');
     }
-}
+};

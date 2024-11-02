@@ -1,5 +1,19 @@
 const catwayService = require('../services/catways');
 
+
+/**
+ * Ajoute un nouveau catway.
+ *
+ * @async
+ * @function add
+ * @param {Object} req - Objet de requête Express.
+ * @param {Object} req.body - Contient les données de la requête.
+ * @param {string} req.body.catwayNumber - Numéro du catway.
+ * @param {string} req.body.type - Type de catway.
+ * @param {string} [req.body.catwayState="Indéterminé"] - État du catway.
+ * @param {Object} res - Objet de réponse Express.
+ * @returns {void}
+ */
 exports.add = async (req, res) => {
     const catwayData = {
         catwayNumber: req.body.catwayNumber,
@@ -15,6 +29,19 @@ exports.add = async (req, res) => {
     }
 };
 
+/**
+ * Met à jour un catway existant.
+ *
+ * @async
+ * @function update
+ * @param {Object} req - Objet de requête Express.
+ * @param {Object} req.body - Contient les données de la requête.
+ * @param {string} req.body.catwayNumber - Numéro du catway.
+ * @param {string} req.body.type - Type de catway.
+ * @param {string} [req.body.catwayState="Indéterminé"] - État du catway.
+ * @param {Object} res - Objet de réponse Express.
+ * @returns {void}
+ */
 exports.update = async (req, res) => {
     const catwayData = {
         catwayNumber: req.body.catwayNumber,
@@ -30,6 +57,16 @@ exports.update = async (req, res) => {
     }
 };
 
+/**
+ * Supprime un catway.
+ *
+ * @async
+ * @function delete
+ * @param {Object} req - Objet de requête Express.
+ * @param {string} req.params.id - Identifiant du catway à supprimer.
+ * @param {Object} res - Objet de réponse Express.
+ * @returns {void}
+ */
 exports.delete = async (req, res) => {
     const id = req.params.id;
     try {

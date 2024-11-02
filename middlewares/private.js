@@ -2,6 +2,18 @@ const jwt = require('jsonwebtoken');
 const SECRET_KEY = process.env.SECRET_KEY;
 
 
+/**
+ * Middleware pour vérifier la validité d'un token JWT.
+ *
+ * @async
+ * @function checkJWT
+ * @param {Object} req - Objet de requête Express.
+ * @param {Object} req.cookies - Cookies de la requête.
+ * @param {string} req.cookies.token - Token JWT présent dans les cookies.
+ * @param {Object} res - Objet de réponse Express.
+ * @param {Function} next - Fonction de rappel pour passer au middleware suivant.
+ * @returns {void}
+ */
 exports.checkJWT = async (req, res, next) => {
     let token = req.cookies.token;
     if (!!token && token.startsWith('Bearer')) {

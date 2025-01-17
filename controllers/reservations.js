@@ -1,4 +1,4 @@
-const reservationService = require('../services/reservations');
+import * as reservationService from '../services/reservations.js';
 
 /**
  * Ajoute une nouvelle réservation.
@@ -15,7 +15,7 @@ const reservationService = require('../services/reservations');
  * @param {Object} res - Objet de réponse Express.
  * @returns {void}
  */
-exports.add = async (req, res) => {
+export const add = async (req, res) => {
     const reservationData = {
         catwayNumber: req.body.catwayNumber,
         clientName: req.body.clientName,
@@ -48,7 +48,7 @@ exports.add = async (req, res) => {
  * @param {Object} res - Objet de réponse Express.
  * @returns {void}
  */
-exports.update = async (req, res) => {
+export const update = async (req, res) => {
     const id = req.params.id;
     const reservationData = {
         catwayNumber: req.body.catwayNumber,
@@ -77,7 +77,7 @@ exports.update = async (req, res) => {
  * @param {Object} res - Objet de réponse Express.
  * @returns {void}
  */
-exports.delete = async (req, res) => {
+export const delet = async (req, res) => {
     const id = req.params.id;
     try {
         await reservationService.delete(id);

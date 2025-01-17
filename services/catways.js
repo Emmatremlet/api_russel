@@ -1,11 +1,11 @@
-const Catway = require('../models/catways');
+import Catway from '../models/catways.js';
 
 /**
  * Récupère tous les catways.
  * @returns {Promise<Array>} - Une promesse qui résout un tableau de catways.
  * @throws {Error} - Erreur lors de la récupération des données.
  */
-exports.getAll = async () => {
+export const getAll = async () => {
     try {
         const catways = await Catway.find();
         return catways;
@@ -20,7 +20,7 @@ exports.getAll = async () => {
  * @returns {Promise<Catway>} - Une promesse qui résout le catway trouvé.
  * @throws {Error} - 'catway_not_found' si le catway n'existe pas ou autre erreur.
  */
-exports.getById = async (id) => {
+export const getById = async (id) => {
     try {
         const catway = await Catway.findById(id);
         if (catway) {
@@ -33,13 +33,12 @@ exports.getById = async (id) => {
     }
 };
 
-
 /**
  * Trouve un catway par son numéro de pont.
  * @param {string} catwayNumberUpdate - Le numéro du catway à rechercher.
  * @returns {Promise<Catway|null>} - Une promesse qui résout le catway trouvé ou null si non trouvé.
  */
-exports.findByCatwayNumber = async (catwayNumberUpdate) => {
+export const findByCatwayNumber = async (catwayNumberUpdate) => {
     const catwayNumber = catwayNumberUpdate;
     const catway = await Catway.findOne({ catwayNumber });
     return catway;
@@ -51,7 +50,7 @@ exports.findByCatwayNumber = async (catwayNumberUpdate) => {
  * @returns {Promise<Catway>} - Une promesse qui résout le catway créé.
  * @throws {Error} - Erreur lors de la création du catway.
  */
-exports.add = async (catwayData) => {
+export const add = async (catwayData) => {
     try {
         const catway = await Catway.create(catwayData);
         return catway;
@@ -68,7 +67,7 @@ exports.add = async (catwayData) => {
  * @returns {Promise<Catway>} - Une promesse qui résout le catway mis à jour.
  * @throws {Error} - 'catway_not_found' si le catway n'existe pas ou autre erreur.
  */
-exports.update = async (id, catwayData) => {
+export const update = async (id, catwayData) => {
     try {
         const catway = await Catway.findOne({ _id: id });
         if (catway) {
@@ -92,7 +91,7 @@ exports.update = async (id, catwayData) => {
  * @returns {Promise<void>} - Une promesse qui résout lorsque le catway est supprimé.
  * @throws {Error} - Erreur lors de la suppression du catway.
  */
-exports.delete = async (id) => {
+export const deleteCatway = async (id) => {
     try {
         await Catway.deleteOne({ _id: id });
     } catch (error) {

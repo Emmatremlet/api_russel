@@ -1,4 +1,4 @@
-const jwt = require('jsonwebtoken');
+import jwt from 'jsonwebtoken';
 const SECRET_KEY = process.env.SECRET_KEY;
 
 
@@ -14,7 +14,7 @@ const SECRET_KEY = process.env.SECRET_KEY;
  * @param {Function} next - Fonction de rappel pour passer au middleware suivant.
  * @returns {void}
  */
-exports.checkJWT = async (req, res, next) => {
+export const checkJWT = async (req, res, next) => {
     let token = req.cookies.token;
     if (!!token && token.startsWith('Bearer')) {
         token = token.slice(7, token.length);

@@ -1,6 +1,6 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 const schema = mongoose.Schema;
-const bcrypt = require('bcrypt');
+import bcrypt from 'bcrypt';
 
 /**
  * Schéma pour le modèle User.
@@ -42,4 +42,4 @@ User.pre('save', function (next) {
     next();
 });
 
-module.exports = mongoose.model('User', User);
+export default mongoose.model('User', User);

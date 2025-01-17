@@ -1,14 +1,13 @@
-
-const Reservation = require('../models/reservations');
+import Reservation from '../models/reservations.js';
 
 /**
  * Récupère toutes les réservations.
  * @returns {Promise<Array>} - Une promesse qui résout un tableau de réservations.
  * @throws {Error} - Erreur lors de la récupération des données des réservations.
  */
-exports.getAll = async () => {
+export const getAll = async () => {
     try {
-        const reservation = await Reservation.find()
+        const reservation = await Reservation.find();
         return reservation;
     } catch (error) {
         throw new Error('Erreur lors de la récupération des données des réservations');
@@ -21,9 +20,9 @@ exports.getAll = async () => {
  * @returns {Promise<Reservation>} - Une promesse qui résout la réservation trouvée.
  * @throws {Error} - 'reservation_not_found' si la réservation n'existe pas ou autre erreur.
  */
-exports.getById = async (id) => {
+export const getById = async (id) => {
     try {
-        let reservation = await Reservation.findById(id)
+        const reservation = await Reservation.findById(id);
         if (reservation) {
             return reservation;
         } else {
@@ -34,13 +33,12 @@ exports.getById = async (id) => {
     }
 };
 
-
 /**
  * Trouve une réservation par le nom du client.
  * @param {string} clientName - Le nom du client à rechercher.
  * @returns {Promise<Reservation|null>} - Une promesse qui résout la réservation trouvée ou null si non trouvée.
  */
-exports.findByClientName = async (clientName) => {
+export const findByClientName = async (clientName) => {
     const reservation = await Reservation.findOne({ clientName });
     return reservation;
 };
@@ -51,15 +49,15 @@ exports.findByClientName = async (clientName) => {
  * @returns {Promise<Reservation>} - Une promesse qui résout la réservation créée.
  * @throws {Error} - Erreur lors de la soumission de la réservation.
  */
-exports.add = async (reservationData) => {
+export const add = async (reservationData) => {
     try {
-        let reservation = await Reservation.create(reservationData);
-        return reservation
+        const reservation = await Reservation.create(reservationData);
+        return reservation;
     } catch (error) {
-        console.log('Erreur lors de la soumission du questionnaire de réservations :' + error);
-        return res.status(501).json(error);
+        console.error('Erreur lors de la soumission du questionnaire de réservations :', error);
+        throw new Error('Erreur lors de la soumission de la réservation');
     }
-}
+};
 
 /**
  * Met à jour une réservation existante.
@@ -68,7 +66,7 @@ exports.add = async (reservationData) => {
  * @returns {Promise<Reservation>} - Une promesse qui résout la réservation mise à jour.
  * @throws {Error} - 'reservation_not_found' si la réservation n'existe pas ou autre erreur.
  */
-exports.update = async (id, reservationData) => {
+export const update = async (id, reservationData) => {
     try {
         const reservation = await Reservation.findOne({ _id: id });
         if (reservation) {
@@ -86,14 +84,13 @@ exports.update = async (id, reservationData) => {
     }
 };
 
-
 /**
  * Supprime une réservation par son ID.
  * @param {string} id - L'ID de la réservation à supprimer.
  * @returns {Promise<void>} - Une promesse qui résout lorsque la réservation est supprimée.
  * @throws {Error} - Erreur lors de la suppression de la réservation.
  */
-exports.delete = async (id) => {
+export const deleteReservation = async (id) => {
     try {
         await Reservation.deleteOne({ _id: id });
     } catch (error) {

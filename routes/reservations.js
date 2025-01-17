@@ -1,8 +1,10 @@
-const express = require('express');
-const router = express.Router();
-const reservationController = require('../controllers/reservations');
-const reservationService = require('../services/reservations');
-const authMiddleware = require('../middlewares/private');
+import express from 'express';
+import * as reservationController from '../controllers/reservations.js';
+import * as reservationService from '../services/reservations.js';
+import * as authMiddleware from '../middlewares/private.js';
+
+export const router = express.Router();
+
 
 /**
  * @route GET /reservations
@@ -60,6 +62,6 @@ router.post('/:id/update',authMiddleware.checkJWT, reservationController.update)
  * @returns {Error} 404 - Reservation not found
  * @returns {Error} 500 - Internal server error
  */
-router.post('/:id/delete',authMiddleware.checkJWT, reservationController.delete);
+router.post('/:id/delete',authMiddleware.checkJWT, reservationController.delet);
 
-module.exports = router;
+export default router;

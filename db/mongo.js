@@ -1,4 +1,7 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 const ClientOptions = {
     dbName: 'Cluster0'
@@ -12,12 +15,12 @@ const ClientOptions = {
  * @returns {Promise<void>} - Résout une promesse une fois la connexion établie.
  * @throws {Error} - Lance une erreur si la connexion échoue.
  */
-exports.initClientDbConnection = async () => {
+export const initClientDbConnection = async () => {
     try {
-        await mongoose.connect(process.env.MONGO_URI, ClientOptions)
+        await mongoose.connect(process.env.MONGO_URI, ClientOptions);
         console.log('Connecté');
     } catch (error) {
         console.log(error);
         throw error;
     }
-}
+};

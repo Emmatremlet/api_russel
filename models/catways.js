@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 const schema = mongoose.Schema;
 
 /**
@@ -35,4 +35,4 @@ const Catway = new schema({
     });
 
 
-module.exports = mongoose.model('Catway', Catway);
+export default mongoose.model('Catway', Catway);

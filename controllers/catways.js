@@ -1,4 +1,4 @@
-const catwayService = require('../services/catways');
+import * as catwayService from '../services/catways.js';
 
 
 /**
@@ -14,7 +14,7 @@ const catwayService = require('../services/catways');
  * @param {Object} res - Objet de réponse Express.
  * @returns {void}
  */
-exports.add = async (req, res) => {
+export const add = async (req, res) => {
     const catwayData = {
         catwayNumber: req.body.catwayNumber,
         type: req.body.type,
@@ -42,7 +42,7 @@ exports.add = async (req, res) => {
  * @param {Object} res - Objet de réponse Express.
  * @returns {void}
  */
-exports.update = async (req, res) => {
+export const update = async (req, res) => {
     const catwayData = {
         catwayNumber: req.body.catwayNumber,
         type: req.body.type,
@@ -67,7 +67,7 @@ exports.update = async (req, res) => {
  * @param {Object} res - Objet de réponse Express.
  * @returns {void}
  */
-exports.delete = async (req, res) => {
+export const delet = async (req, res) => {
     const id = req.params.id;
     try {
         await catwayService.delete(id);

@@ -1,8 +1,9 @@
-const express = require('express');
-const router = express.Router();
-const userController = require('../controllers/users');
-const userService = require('../services/users');
-const authMiddleware = require('../middlewares/private');
+import express from 'express';
+import * as userController from '../controllers/users.js';
+import * as userService from '../services/users.js';
+import * as authMiddleware from '../middlewares/private.js';
+
+export const router = express.Router();
 
 /**
  * @route GET /users
@@ -50,7 +51,7 @@ router.post('/:id/update', authMiddleware.checkJWT, userController.update);
  * @returns {Error} 404 - User not found
  * @returns {Error} 500 - Internal server error
  */
-router.post('/:id/delete', authMiddleware.checkJWT, userController.delete);
+router.post('/:id/delete', authMiddleware.checkJWT, userController.delet);
 
 /**
  * @route POST /users/authenticate
@@ -62,4 +63,4 @@ router.post('/:id/delete', authMiddleware.checkJWT, userController.delete);
  */
 router.post('/authenticate', userController.authenticate);
 
-module.exports = router;
+export default router;

@@ -3,24 +3,26 @@
  * @module app
  */
 
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
-var mongoose = require('mongoose');
-var cors = require('cors');
-const fs = require('fs');
+import createError from 'http-errors';
+import express from 'express';
+import { fileURLToPath } from 'url';
+import path from 'path';
+import cookieParser from 'cookie-parser';
+import logger from 'morgan';
+import cors from 'cors';
+import fs from 'fs';
 
+import { router as indexRouter } from './routes/index.js';
+import { router as usersRouter } from './routes/users.js';
+import { router as catwaysRouter } from './routes/catways.js';
+import { router as reservationsRouter } from './routes/reservations.js';
+import { initClientDbConnection } from './db/mongo.js';
+import Catway from './models/catways.js';
+import Reservation from './models/reservations.js';
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
-var catwaysRouter = require('./routes/catways');
-var reservationsRouter = require('./routes/reservations');
-const mongodb = require('./db/mongo');
-const Catway = require('./models/catways');
-const Reservation = require('./models/reservations');
-
+// Recreate __dirname in ESM
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 /**
  * Path to JSON data files.
@@ -33,9 +35,9 @@ const dataPath2 = path.join(__dirname, 'data', 'reservations.json');
 const reservationsData = JSON.parse(fs.readFileSync(dataPath2, 'utf-8'));
 
 // Initialize MongoDB client connection
-mongodb.initClientDbConnection();
+await initClientDbConnection();
 
-var app = express();
+const app = express();
 
 // Set view engine and views directory
 app.set('views', path.join(__dirname, 'views'));
@@ -58,14 +60,13 @@ app.use('/users', usersRouter);
 app.use('/catways', catwaysRouter);
 app.use('/reservations', reservationsRouter);
 
-
 // Catch 404 and forward to error handler
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   next(createError(404));
 });
 
 // Error handler
-app.use(function(err, req, res, next) {
+app.use(function (err, req, res, next) {
   // Set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
@@ -75,10 +76,10 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-
+// Log and return JSON error responses
 app.use((err, req, res, next) => {
-    console.error('Erreur :', err); 
-    res.status(err.status || 500).json({ message: err.message || 'Erreur interne du serveur' });
+  console.error('Erreur :', err);
+  res.status(err.status || 500).json({ message: err.message || 'Erreur interne du serveur' });
 });
 
 /**
@@ -117,9 +118,8 @@ const insertData2 = async () => {
   }
 };
 
-
 // Call functions to insert data
 insertData();
 insertData2();
 
-module.exports = app;
+export default app;

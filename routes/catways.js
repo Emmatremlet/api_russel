@@ -1,8 +1,9 @@
-const express = require('express');
-const router = express.Router();
-const catwayController = require('../controllers/catways');
-const catwayService = require('../services/catways');
-const authMiddleware = require('../middlewares/private');
+import express from 'express';
+import * as catwayController from '../controllers/catways.js';
+import * as catwayService from '../services/catways.js';
+import * as authMiddleware from '../middlewares/private.js';
+
+export const router = express.Router();
 
 /**
  * @route GET /
@@ -61,6 +62,7 @@ router.post('/:id/update',authMiddleware.checkJWT, catwayController.update);
  * @returns {Error} 404 - Catway not found
  * @returns {Error} 500 - Internal server error
  */
-router.post('/:id/delete',authMiddleware.checkJWT, catwayController.delete);
+router.post('/:id/delete',authMiddleware.checkJWT, catwayController.delet);
 
-module.exports = router;
+
+export default router;

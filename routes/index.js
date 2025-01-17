@@ -1,13 +1,14 @@
-var express = require('express');
-var router = express.Router();
-var userRoute = require('../routes/users');
-var catwayRoute = require('../routes/catways');
-var reservationRoute = require('../routes/reservations');
-var catwayService = require('../services/catways');
-var userService = require('../services/users');
-var reservationService = require('../services/reservations');
-const authMiddleware = require('../middlewares/private');
-const userController = require('../controllers/users');
+import express from 'express';
+import userRoute from '../routes/users.js';
+import catwayRoute from '../routes/catways.js';
+import reservationRoute from '../routes/reservations.js';
+import * as catwayService from '../services/catways.js';
+import * as userService from '../services/users.js';
+import * as reservationService from '../services/reservations.js';
+import * as authMiddleware from '../middlewares/private.js';
+import * as userController from '../controllers/users.js';
+
+export const router = express.Router();
 
 // Middleware pour vérifier le JWT
 router.use(authMiddleware.checkJWT);
@@ -259,4 +260,4 @@ router.use('/users', userRoute);
 router.use('/catways', catwayRoute);
 router.use('/reservations', reservationRoute);
 
-module.exports = router;
+export default router;

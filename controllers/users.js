@@ -1,5 +1,6 @@
-const userService = require('../services/users');
-const jwt = require('jsonwebtoken');
+import * as userService from '../services/users.js';
+import jwt from 'jsonwebtoken'
+
 const SECRET_KEY = process.env.SECRET_KEY;
 
 /**
@@ -15,7 +16,7 @@ const SECRET_KEY = process.env.SECRET_KEY;
  * @param {Object} res - Objet de réponse Express.
  * @returns {void}
  */
-exports.add = async (req, res, next) => {
+export const add = async (req, res, next) => {
     const userData = {
         name: req.body.name,
         email: req.body.email,
@@ -44,7 +45,7 @@ exports.add = async (req, res, next) => {
  * @param {Object} res - Objet de réponse Express.
  * @returns {void}
  */
-exports.update = async (req, res) => {
+export const update = async (req, res) => {
     const userData = {
         name: req.body.name,
         email: req.body.email
@@ -69,7 +70,7 @@ exports.update = async (req, res) => {
  * @param {Object} res - Objet de réponse Express.
  * @returns {void}
  */
-exports.delete = async (req, res) => {
+export const delet = async (req, res) => {
     try {
         await userService.delete(req.params.id);
         res.clearCookie('token');
@@ -91,7 +92,7 @@ exports.delete = async (req, res) => {
  * @param {Object} res - Objet de réponse Express.
  * @returns {void}
  */
-exports.authenticate = async (req, res) => {
+export const authenticate = async (req, res) => {
     const temp = {
         email: req.body.email,
         password: req.body.password

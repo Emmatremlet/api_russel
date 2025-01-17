@@ -1,13 +1,12 @@
-const User = require('../models/users');
-const bcrypt = require('bcrypt');
-
+import User from '../models/users.js';
+import bcrypt from 'bcrypt';
 
 /**
  * Récupère tous les utilisateurs.
  * @returns {Promise<Array>} - Une promesse qui résout un tableau d'utilisateurs.
  * @throws {Error} - Erreur lors de la récupération des données.
  */
-exports.getAll = async () => {
+export const getAll = async () => {
     try {
         const users = await User.find();
         return users;
@@ -22,7 +21,7 @@ exports.getAll = async () => {
  * @returns {Promise<Object>} - Une promesse qui résout l'utilisateur trouvé.
  * @throws {Error} - 'Utilisateur non trouvé' si l'utilisateur n'existe pas.
  */
-exports.getById = async (id) => {
+export const getById = async (id) => {
     try {
         const user = await User.findById(id).lean();
         if (!user) throw new Error('Utilisateur non trouvé');
@@ -39,7 +38,7 @@ exports.getById = async (id) => {
  * @throws {Error} - 'Tous les champs sont requis' si des champs sont manquants,
  *                   ou 'L'email est déjà utilisé' si l'email est en double.
  */
-exports.add = async (userData) => {
+export const add = async (userData) => {
     try {
         if (!userData.name || !userData.email || !userData.password) {
             throw new Error("Tous les champs sont requis.");
@@ -56,7 +55,6 @@ exports.add = async (userData) => {
     }
 };
 
-
 /**
  * Met à jour un utilisateur existant.
  * @param {string} id - L'ID de l'utilisateur à mettre à jour.
@@ -64,7 +62,7 @@ exports.add = async (userData) => {
  * @returns {Promise<Object>} - Une promesse qui résout l'utilisateur mis à jour.
  * @throws {Error} - 'user_not_found' si l'utilisateur n'existe pas.
  */
-exports.update = async (id, userData) => {
+export const update = async (id, userData) => {
     try {
         const user = await User.findOne({ _id: id });
         if (!user) throw new Error('user_not_found');
@@ -85,7 +83,7 @@ exports.update = async (id, userData) => {
  * @returns {Promise<void>} - Une promesse qui résout lorsque l'utilisateur est supprimé.
  * @throws {Error} - Erreur lors de la suppression de l'utilisateur.
  */
-exports.delete = async (id) => {
+export const deleteUser = async (id) => {
     try {
         await User.deleteOne({ _id: id });
     } catch (error) {
@@ -99,7 +97,7 @@ exports.delete = async (id) => {
  * @returns {Promise<Object>} - Une promesse qui résout l'utilisateur authentifié.
  * @throws {Error} - 'user_not_found' si l'utilisateur n'existe pas ou 'wrong_credentials' si les identifiants sont incorrects.
  */
-exports.authenticate = async (temp) => {
+export const authenticate = async (temp) => {
     try {
         const user = await User.findOne({ email: temp.email }, '-__v -createdAt -updatedAt');
         if (!user) throw new Error('user_not_found');

@@ -86,14 +86,18 @@ export const update = async (id, catwayData) => {
 };
 
 /**
- * Supprime un catway par son ID.
- * @param {string} id - L'ID du catway à supprimer.
- * @returns {Promise<void>} - Une promesse qui résout lorsque le catway est supprimé.
+ * Supprime un catway ou tous les catways si aucun ID n'est fourni.
+ * @param {string|null} id - L'ID du catway à supprimer ou null pour tout supprimer.
+ * @returns {Promise<void>} - Une promesse qui résout lorsque la suppression est effectuée.
  * @throws {Error} - Erreur lors de la suppression du catway.
  */
-export const deleteCatway = async (id) => {
+export const deleteCatway = async (id = null) => {
     try {
-        await Catway.deleteOne({ _id: id });
+        if (id) {
+            await Catway.deleteOne({ _id: id });
+        } else {
+            await Catway.deleteMany({});
+        }
     } catch (error) {
         throw new Error('Erreur lors de la suppression du catway');
     }

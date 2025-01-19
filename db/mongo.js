@@ -20,7 +20,7 @@ export const initClientDbConnection = async () => {
         await mongoose.connect(process.env.MONGO_URI, ClientOptions);
         console.log('Connecté');
     } catch (error) {
-        console.log(error);
+        console.log('Erreur de connection à MongoDB', error);
         throw error;
     }
 };

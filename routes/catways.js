@@ -1,5 +1,5 @@
 import express from 'express';
-import * as catwayController from '../Controllers/catways.js';
+import * as catwayController from '../controllers/catways.js';
 import * as catwayService from '../services/catways.js';
 import * as authMiddleware from '../middlewares/private.js';
 
